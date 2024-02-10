@@ -1,0 +1,18 @@
+CC = g++ 
+FILE=main
+
+all: run_in
+
+compile: $(FILE).cpp
+	$(CC) -o out/main $(FILE).cpp
+run: $(FILE).cpp
+	$(CC) -o out/main $(FILE).cpp
+	./out/main
+run_in: $(FILE).cpp
+	$(CC) -o out/main $(FILE).cpp
+	./out/main < ./in/input.txt
+debug: $(FILE).cpp
+	$(CC) -g -o out/main $(FILE).cpp
+	gdb ./out/main
+clean:
+	rm out/main
