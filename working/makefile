@@ -4,7 +4,7 @@ FILE=main
 all: run_in
 
 compile: $(FILE).cpp
-	$(CC) -o out/main $(FILE).cpp
+	$(CC) -g -o out/main $(FILE).cpp
 run: $(FILE).cpp
 	$(CC) -o out/main $(FILE).cpp
 	./out/main
