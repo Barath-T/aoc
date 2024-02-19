@@ -2,26 +2,29 @@
 #include <cstdint>
 #include <iostream>
 #include <regex>
+#include <vector>
 
-double parse_digit(std::string line);
+std::vector<double> parse_digits(std::string line);
 
 double calculate_distance(uint16_t total_time, uint16_t loading_time);
 std::pair<double, double> min_max_points(double b, double c);
 
 int main(int argc, char **argv) {
-  uint64_t result;
-
+  uint64_t result = 1;
   std::string line;
+  getline(std::cin, line);
+
+  std::vector<double> durations = parse_digits(line);
 
   getline(std::cin, line);
-  double duration = parse_digit(line);
+  std::vector<double> distances = parse_digits(line);
 
-  getline(std::cin, line);
-  double distance = parse_digit(line);
+  for (int i = 0; i < durations.size(); i++) {
+    std::pair<double, double> min_max =
+        min_max_points(durations[i], distances[i]);
 
-  std::pair<double, double> min_max = min_max_points(duration, distance);
-
-  result = (min_max.second - min_max.first + 1);
+    result *= (min_max.second - min_max.first + 1);
+  }
 
   std::cout << result << std::endl;
   return 0;
@@ -45,17 +48,14 @@ double calculate_distance(uint16_t total_time, uint16_t loading_time) {
   return (total_time * loading_time) - (loading_time * loading_time);
 }
 // parse all digits in a line into vector using
-double parse_digit(std::string line) {
-  double digit;
-  std::string d = "";
+std::vector<double> parse_digits(std::string line) {
+  std::vector<double> alldigits;
 
   std::regex digit_regex(R"(\d+)");
-
   for (std::smatch match; std::regex_search(line, match, digit_regex);) {
-    d += match[0];
+    alldigits.push_back(std::stod(match[0]));
     line = match.suffix();
   }
 
-  digit = std::stod(d);
-  return digit;
+  return alldigits;
 }
