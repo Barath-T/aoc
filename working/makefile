@@ -1,4 +1,4 @@
-CC = g++ 
+CC = clang++ 
 FILE=main
 
 compile: $(FILE).cpp
