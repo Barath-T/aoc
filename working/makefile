@@ -1,8 +1,6 @@
 CC = g++ 
 FILE=main
 
-all: run_in
-
 compile: $(FILE).cpp
 	$(CC) -g -o out/main $(FILE).cpp
 run: $(FILE).cpp
