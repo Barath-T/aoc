@@ -31,7 +31,8 @@ int main(int argc, char **argv) {
    pair, high card */
   std::vector<std::vector<std::pair<std::string, uint>>> kinds(7);
   for (int i = 0; i < hands.size(); i++) {
-    kinds[find_kind(hands[i])].push_back({hands[i], bids[i]});
+    int k = find_kind(hands[i]);
+    kinds[k].push_back({hands[i], bids[i]});
   }
   for (int i = kinds.size() - 1; i >= 0; i--) {
     for (std::pair<std::string, uint> p : kinds[i]) {
@@ -47,7 +48,7 @@ int main(int argc, char **argv) {
           }
 
           std::unordered_map<char, int> cards = {
-              {'T', 10}, {'J', 11}, {'Q', 12}, {'K', 13}, {'A', 14}};
+              {'J', 1}, {'T', 10}, {'Q', 12}, {'K', 13}, {'A', 14}};
 
           for (int i = 0; i < 5; i++) {
             int ic1 =
@@ -75,19 +76,29 @@ int main(int argc, char **argv) {
       rank++;
     }
   }
-  std::cout << compare_hands("KTJJT", "KK477") << std::endl;
   std::cout << result;
   return 0;
 }
 
 int find_kind(std::string s) {
+  std::cout << s << std::endl;
   std::unordered_map<char, int> count;
   for (int i = 0; i < s.size(); i++) {
     count[s[i]] += 1;
   }
+
+  int j_count = count['J'];
+  int most_frequent = -10;
+
   std::vector<int> vec_kind(5);
   for (std::pair<char, int> p : count) {
+    if (most_frequent < p.second - 1)
+      most_frequent = p.second - 1;
     vec_kind[p.second - 1] += 1;
+  }
+  if (!(most_frequent == 4)) {
+    vec_kind[most_frequent] -= 1;
+    vec_kind[most_frequent + j_count] += 1;
   }
   if (vec_kind[4] == 1) {
     return 0;
