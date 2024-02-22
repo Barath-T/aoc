@@ -34,11 +34,6 @@ int main(int argc, char **argv) {
     kinds[find_kind(hands[i])].push_back({hands[i], bids[i]});
   }
   for (int i = kinds.size() - 1; i >= 0; i--) {
-    for (std::pair<std::string, uint> p : kinds[i]) {
-      std::cout << p.second << " " << p.first << std::endl;
-    }
-  }
-  for (int i = kinds.size() - 1; i >= 0; i--) {
     std::sort(
         kinds[i].begin(), kinds[i].end(),
         [](std::pair<std::string, uint> s1, std::pair<std::string, uint> s2) {
@@ -63,19 +58,11 @@ int main(int argc, char **argv) {
         });
   }
   for (int i = kinds.size() - 1; i >= 0; i--) {
-    for (std::pair<std::string, uint> p : kinds[i]) {
-      std::cout << p.second << " " << p.first << std::endl;
-    }
-    std::cout << std::endl;
-  }
-  for (int i = kinds.size() - 1; i >= 0; i--) {
     for (int j = 0; j < kinds[i].size(); j++) {
-      std::cout << kinds[i][j].second << " " << rank << std::endl;
       result += kinds[i][j].second * rank;
       rank++;
     }
   }
-  std::cout << compare_hands("KTJJT", "KK477") << std::endl;
   std::cout << result;
   return 0;
 }
