@@ -25,28 +25,26 @@ int main(int argc, char **argv) {
   uint step = 0;
   bool found = false;
 
-  while (!found) {
-    std::string curr = "AAA";
-    std::string next;
-    for (int i = 0; !found; i++) {
-      if (i == path.size()) {
-        i = 0;
-      }
-      switch (path[i]) {
-      case 'R':
-        next = network[curr].second;
-        break;
-      case 'L':
-        next = network[curr].first;
-        break;
-      }
-      step++;
-      if (next == "ZZZ") {
-        found = true;
-        continue;
-      }
-      curr = next;
+  std::string curr = "AAA";
+  std::string next;
+  for (int i = 0; !found; i++) {
+    if (i == path.size()) {
+      i = 0;
     }
+    switch (path[i]) {
+    case 'R':
+      next = network[curr].second;
+      break;
+    case 'L':
+      next = network[curr].first;
+      break;
+    }
+    step++;
+    if (next == "ZZZ") {
+      found = true;
+      continue;
+    }
+    curr = next;
   }
 
   std::cout << step << std::endl;
