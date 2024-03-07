@@ -22,7 +22,8 @@ int main(int argc, char **argv) {
   int result = 0;
 
   for (int i = 0; i < input.size(); i++) {
-    result += find_next(input[i]);
+    int curr = find_next(input[i]);
+    result += curr;
   }
   std::cout << result << std::endl;
   return 0;
@@ -34,20 +35,16 @@ int find_next(std::vector<int> seq) {
   bool all_zeros = true;
   for (int i = 0; i < seq.size() - 1; i++) {
     int diff = seq[i + 1] - seq[i];
-    std::cout << diff << " ";
     next_sequence.push_back(diff);
     if (all_zeros && (diff != 0)) {
       all_zeros = false;
     }
   }
-  std::cout << std::endl;
 
   if (all_zeros)
-    return 0;
+    return seq[seq.size() - 1];
 
   int down = find_next(next_sequence);
   result = seq[seq.size() - 1] + down;
-  std::cout << seq[seq.size() - 1] << "   " << down << std::endl;
-  std::cout << "   " << result << std::endl;
   return result;
 }
